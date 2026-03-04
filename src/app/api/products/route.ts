@@ -9,30 +9,32 @@ import { headers } from "next/headers";
 export async function GET() {
   try {
     // Get all products
-    const allProducts = db.select().from(products).all();
+    const allProducts = await db.select().from(products);
 
     // Compute stock per product from movements
-    const productsWithStock = allProducts.map((product) => {
-      const stockResult = db
-        .select({ total: sql<number>`COALESCE(SUM(${movements.qty}), 0)` })
-        .from(movements)
-        .where(eq(movements.productId, product.id))
-        .get();
+    const productsWithStock = await Promise.all(
+      allProducts.map(async (product) => {
+        const stockResult = await db
+          .select({ total: sql<number>`COALESCE(SUM(${movements.qty}), 0)` })
+          .from(movements)
+          .where(eq(movements.productId, product.id))
+          .get();
 
-      const totalStock = stockResult?.total ?? 0;
-      const status =
-        totalStock <= 0
-          ? "out-of-stock"
-          : totalStock <= product.minThreshold
-            ? "low-stock"
-            : "in-stock";
+        const totalStock = stockResult?.total ?? 0;
+        const status =
+          totalStock <= 0
+            ? "out-of-stock"
+            : totalStock <= product.minThreshold
+              ? "low-stock"
+              : "in-stock";
 
-      return {
-        ...product,
-        totalStock,
-        status,
-      };
-    });
+        return {
+          ...product,
+          totalStock,
+          status,
+        };
+      }),
+    );
 
     return NextResponse.json(productsWithStock);
   } catch (error) {
@@ -62,7 +64,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = db
+    const [result] = await db
       .insert(products)
       .values({
         sku,
@@ -71,8 +73,7 @@ export async function POST(request: NextRequest) {
         category: category || "General",
         minThreshold: minThreshold ?? 0,
       })
-      .returning()
-      .get();
+      .returning();
 
     return NextResponse.json(result, { status: 201 });
   } catch (error: unknown) {

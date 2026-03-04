@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
       query = query.where(and(...conditions));
     }
 
-    const results = query.all();
+    const results = await query;
     return NextResponse.json(results);
   } catch (error) {
     console.error("GET /api/movements error:", error);
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = db
+    const [result] = await db
       .insert(movements)
       .values({
         productId,
@@ -88,8 +88,7 @@ export async function POST(request: NextRequest) {
         toLocation: toLocation || null,
         note: note || "",
       })
-      .returning()
-      .get();
+      .returning();
 
     return NextResponse.json(result, { status: 201 });
   } catch (error) {

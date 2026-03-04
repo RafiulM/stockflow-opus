@@ -8,34 +8,36 @@ import { headers } from "next/headers";
 // GET /api/locations — list all locations with item counts
 export async function GET() {
   try {
-    const allLocations = db.select().from(locations).all();
+    const allLocations = await db.select().from(locations);
 
     // Compute item count per location by summing inbound movements to that zone
-    const locationsWithCounts = allLocations.map((loc) => {
-      const countResult = db
-        .select({
-          total: sql<number>`COALESCE(SUM(ABS(${movements.qty})), 0)`,
-        })
-        .from(movements)
-        .where(
-          or(
-            eq(movements.toLocation, loc.zone),
-            eq(movements.toLocation, loc.name),
-          ),
-        )
-        .get();
+    const locationsWithCounts = await Promise.all(
+      allLocations.map(async (loc) => {
+        const countResult = await db
+          .select({
+            total: sql<number>`COALESCE(SUM(ABS(${movements.qty})), 0)`,
+          })
+          .from(movements)
+          .where(
+            or(
+              eq(movements.toLocation, loc.zone),
+              eq(movements.toLocation, loc.name),
+            ),
+          )
+          .get();
 
-      // Simple approximation — distribute across locations in same zone
-      const zoneLocations = allLocations.filter((l) => l.zone === loc.zone);
-      const itemCount = Math.round(
-        (countResult?.total ?? 0) / zoneLocations.length,
-      );
+        // Simple approximation — distribute across locations in same zone
+        const zoneLocations = allLocations.filter((l) => l.zone === loc.zone);
+        const itemCount = Math.round(
+          (countResult?.total ?? 0) / zoneLocations.length,
+        );
 
-      return {
-        ...loc,
-        itemCount: Math.min(itemCount, loc.capacity),
-      };
-    });
+        return {
+          ...loc,
+          itemCount: Math.min(itemCount, loc.capacity),
+        };
+      }),
+    );
 
     return NextResponse.json(locationsWithCounts);
   } catch (error) {
@@ -65,7 +67,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const result = db
+    const [result] = await db
       .insert(locations)
       .values({
         name,
@@ -73,8 +75,7 @@ export async function POST(request: NextRequest) {
         type: type || "shelf",
         capacity: capacity ?? 100,
       })
-      .returning()
-      .get();
+      .returning();
 
     return NextResponse.json(result, { status: 201 });
   } catch (error) {

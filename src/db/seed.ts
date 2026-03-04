@@ -1,20 +1,21 @@
-import Database from "better-sqlite3";
-import { drizzle } from "drizzle-orm/better-sqlite3";
+import { createClient } from "@libsql/client";
+import { drizzle } from "drizzle-orm/libsql";
 import { products, locations, movements } from "./schema";
-import path from "path";
 
-const dbPath = path.join(process.cwd(), "sqlite.db");
-const sqlite = new Database(dbPath);
-sqlite.pragma("journal_mode = WAL");
-const db = drizzle(sqlite);
+const client = createClient({
+  url: process.env.TURSO_DATABASE_URL!,
+  authToken: process.env.TURSO_AUTH_TOKEN,
+});
+
+const db = drizzle(client);
 
 async function seed() {
   console.log("🌱 Seeding database...");
 
   // Clear existing data
-  db.delete(movements).run();
-  db.delete(products).run();
-  db.delete(locations).run();
+  await db.delete(movements);
+  await db.delete(products);
+  await db.delete(locations);
 
   // Seed products
   const productData = [
@@ -76,11 +77,10 @@ async function seed() {
     },
   ];
 
-  const insertedProducts = db
+  const insertedProducts = await db
     .insert(products)
     .values(productData)
-    .returning()
-    .all();
+    .returning();
   console.log(`  ✓ Inserted ${insertedProducts.length} products`);
 
   // Seed locations
@@ -122,11 +122,10 @@ async function seed() {
     },
   ];
 
-  const insertedLocations = db
+  const insertedLocations = await db
     .insert(locations)
     .values(locationData)
-    .returning()
-    .all();
+    .returning();
   console.log(`  ✓ Inserted ${insertedLocations.length} locations`);
 
   // Seed movements (use a fake userId since no real user exists yet)
@@ -254,15 +253,13 @@ async function seed() {
     },
   ];
 
-  const insertedMovements = db
+  const insertedMovements = await db
     .insert(movements)
     .values(movementData)
-    .returning()
-    .all();
+    .returning();
   console.log(`  ✓ Inserted ${insertedMovements.length} movements`);
 
   console.log("✅ Seed completed!");
-  sqlite.close();
 }
 
 seed().catch((err) => {

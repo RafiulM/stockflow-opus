@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
       query = query.where(eq(products.sku, sku));
     }
 
-    const results = query.all();
+    const results = await query;
 
     // Format for the timeline component
     const entries = results.map((r) => ({

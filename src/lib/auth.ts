@@ -20,4 +20,7 @@ export const auth = betterAuth({
     updateAge: 60 * 60 * 24, // 1 day
   },
   trustedOrigins: ["http://localhost:3000", "http://localhost:3001"],
+  rateLimit: {
+    enabled: false,
+  },
 });

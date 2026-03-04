@@ -7,12 +7,12 @@ import { eq, sql, gte } from "drizzle-orm";
 export async function GET() {
   try {
     // Total stock across all products
-    const allProducts = db.select().from(products).all();
+    const allProducts = await db.select().from(products);
     let totalStock = 0;
     let lowStockItems = 0;
 
     for (const product of allProducts) {
-      const stockResult = db
+      const stockResult = await db
         .select({ total: sql<number>`COALESCE(SUM(${movements.qty}), 0)` })
         .from(movements)
         .where(eq(movements.productId, product.id))
@@ -27,7 +27,7 @@ export async function GET() {
 
     // Today's movements count
     const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
-    const dailyMovementsResult = db
+    const dailyMovementsResult = await db
       .select({ count: sql<number>`COUNT(*)` })
       .from(movements)
       .where(gte(movements.createdAt, today))
@@ -36,7 +36,7 @@ export async function GET() {
     const dailyMovements = dailyMovementsResult?.count ?? 0;
 
     // Active locations
-    const activeLocationsResult = db
+    const activeLocationsResult = await db
       .select({ count: sql<number>`COUNT(*)` })
       .from(locations)
       .get();
@@ -44,7 +44,7 @@ export async function GET() {
     const activeLocations = activeLocationsResult?.count ?? 0;
 
     // Recent activity (last 10 movements)
-    const recentActivity = db
+    const recentActivity = await db
       .select({
         id: movements.id,
         type: movements.type,
@@ -60,8 +60,7 @@ export async function GET() {
       .from(movements)
       .innerJoin(products, eq(movements.productId, products.id))
       .orderBy(sql`${movements.createdAt} DESC`)
-      .limit(10)
-      .all();
+      .limit(10);
 
     return NextResponse.json({
       kpi: {

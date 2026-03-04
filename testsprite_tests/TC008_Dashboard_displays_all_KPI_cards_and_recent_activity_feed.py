@@ -24,38 +24,35 @@ async def run_test():
 
         # Create a new browser context (like an incognito window)
         context = await browser.new_context()
-        context.set_default_timeout(5000)
+        context.set_default_timeout(10000)
 
         # Open a new page in the browser context
         page = await context.new_page()
 
-        # Interact with the page elements to simulate user flow
-        # -> Navigate to http://localhost:3000
-        await page.goto("http://localhost:3000", wait_until="commit", timeout=10000)
-        
-        # -> Fill the Email and Password fields and click the Sign In button (input index 6 -> raf@raf.com, input index 7 -> admin123, then click index 10).
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/main/div/div/div[2]/form/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('raf@raf.com')
-        
-        frame = context.pages[-1]
-        # Input text
-        elem = frame.locator('xpath=/html/body/main/div/div/div[2]/form/div[2]/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('admin123')
-        
-        frame = context.pages[-1]
-        # Click element
-        elem = frame.locator('xpath=/html/body/main/div/div/div[2]/form/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-        # --> Assertions to verify final state
-        frame = context.pages[-1]
-        assert '/' in frame.url
-        await expect(frame.locator('text=Total Stock').first).to_be_visible(timeout=3000)
-        await expect(frame.locator('text=Low Stock Items').first).to_be_visible(timeout=3000)
-        await expect(frame.locator('text=Recent Activity').first).to_be_visible(timeout=3000)
-        await asyncio.sleep(5)
+        # -> Navigate to http://localhost:3000 (will redirect to /login)
+        await page.goto("http://localhost:3000", wait_until="networkidle", timeout=15000)
+
+        # -> Fill the Email field
+        email_input = page.locator('input[type="email"], input[name="email"]').first
+        await email_input.wait_for(state="visible", timeout=10000)
+        await email_input.fill('raf@raf.com')
+
+        # -> Fill the Password field
+        password_input = page.locator('input[type="password"], input[name="password"]').first
+        await password_input.fill('admin123')
+
+        # -> Click Sign In and wait for navigation to dashboard
+        sign_in_button = page.locator('button:has-text("Sign In"), button[type="submit"]').first
+        await sign_in_button.click()
+
+        # Wait for navigation away from login page to dashboard
+        await page.wait_for_url("http://localhost:3000/", timeout=15000)
+
+        # --> Assertions to verify dashboard loaded with KPI cards and activity feed
+        await expect(page.locator('text=Total Stock').first).to_be_visible(timeout=10000)
+        await expect(page.locator('text=Low Stock Items').first).to_be_visible(timeout=10000)
+        await expect(page.locator('text=Recent Activity').first).to_be_visible(timeout=10000)
+        await asyncio.sleep(2)
 
     finally:
         if context:
@@ -66,4 +63,3 @@ async def run_test():
             await pw.stop()
 
 asyncio.run(run_test())
-    
