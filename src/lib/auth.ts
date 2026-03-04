@@ -34,5 +34,7 @@ export const auth = betterAuth({
   ],
   rateLimit: {
     enabled: false,
+    window: 60,
+    max: 1000,
   },
 });
