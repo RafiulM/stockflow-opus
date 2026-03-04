@@ -1,0 +1,2278 @@
+[
+  {
+    "id": "TC001",
+    "title": "Successful sign up redirects to dashboard and shows KPI cards",
+    "description": "Verifies a new user can register with valid details and is redirected to the dashboard where KPI cards are visible.",
+    "category": "User Registration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Sign Up\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Test User\" into the name input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"new.user+e2e.001@example.com\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"ValidPassw0rd!\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Sign Up\" button to submit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"KPI\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Sign up shows validation errors for invalid email format and too-short password",
+    "description": "Verifies the sign up form displays an error message when email format is invalid and password is too short.",
+    "category": "User Registration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Invalid Email User\" into the name input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"invalid-email-format\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"123\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Sign Up\" button to submit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"invalid\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/signup\""
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Sign up prevents submission when required fields are empty",
+    "description": "Verifies the form shows a visible error when attempting to submit without filling required fields.",
+    "category": "User Registration",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Sign Up\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Sign Up\" button to submit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/signup\""
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Sign up rejects password that is too short even with valid email",
+    "description": "Verifies a valid email with an invalid short password results in a visible validation error and no redirect.",
+    "category": "User Registration",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Short Password User\" into the name input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"new.user+e2e.shortpw@example.com\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"short\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Sign Up\" button to submit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"password\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/signup\""
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Sign up rejects malformed email even with strong password",
+    "description": "Verifies a malformed email triggers a visible validation error and user remains on the sign up page.",
+    "category": "User Registration",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Bad Email User\" into the name input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"user@\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"ValidPassw0rd!\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Sign Up\" button to submit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/signup\""
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Successful sign up works via Enter key submission from password field",
+    "description": "Verifies the form can be submitted using the Enter key and still redirects to the dashboard on success.",
+    "category": "User Registration",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Enter Submit User\" into the name input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"new.user+e2e.enter.001@example.com\" into the email input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"ValidPassw0rd!\" into the password input field"
+      },
+      {
+        "type": "action",
+        "description": "Press Enter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Dashboard\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Sign up page loads and displays required inputs",
+    "description": "Verifies the sign up page renders and the key form fields are visible to the user.",
+    "category": "User Registration",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Sign Up\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Name\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Email\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Password\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Sign Up\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Dashboard displays all KPI cards and recent activity feed",
+    "description": "Verifies the authenticated user can view all KPI cards and the recent activity list on the Dashboard.",
+    "category": "Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Log in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Total Stock\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Low Stock Items\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Recent Activity\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Dashboard KPI cards show all four KPI sections",
+    "description": "Verifies the Dashboard shows the four expected KPI sections: total stock, low stock items, daily movements, and active locations.",
+    "category": "Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Log in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Total Stock\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Daily Movements\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Active Locations\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Quick action: Register Sale navigates to Movements page",
+    "description": "Verifies the \"Register Sale\" quick action takes the user from the Dashboard to the Movements page.",
+    "category": "Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Log in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the quick action button \"Register Sale\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify page title contains \"Movements\""
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Quick action: Receive Stock navigates to Movements and shows movement registration UI",
+    "description": "Verifies the \"Receive Stock\" quick action navigates to Movements and a movement registration UI is available.",
+    "category": "Dashboard",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Log in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on the quick action button \"Receive Stock\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Register Movement\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Quick action: Transfer Stock is present and navigates to Movements",
+    "description": "Verifies the Dashboard displays the \"Transfer Stock\" quick action and it routes to the Movements page when clicked.",
+    "category": "Dashboard",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Log in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Transfer Stock\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the quick action button \"Transfer Stock\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Dashboard shows non-empty numeric values (or placeholders) on KPI cards",
+    "description": "Verifies KPI cards render a visible value area (number or placeholder) for each KPI card.",
+    "category": "Dashboard",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Log in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Total Stock\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Low Stock Items\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Daily Movements\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Recent activity section is visible and scrollable into view",
+    "description": "Verifies the recent activity section can be brought into view and is visible on the Dashboard.",
+    "category": "Dashboard",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click on the \"Log in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the \"Recent Activity\" section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Recent Activity\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Recent Activity\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Create a new product and confirm it appears in the list with a status indicator",
+    "description": "Verifies an authenticated user can create a product from the Add Product dialog and see it listed with a visible status indicator.",
+    "category": "Product Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Products\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/products\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Product\" button"
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Complete Add Product form and submit successfully",
+    "description": "Verifies the Add Product dialog accepts valid inputs and creates the product successfully.",
+    "category": "Product Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Products\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Product\" button"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"SKU-UI-E2E-001\" into the SKU input field"
+      },
+      {
+        "type": "action",
+        "description": "Fill \"UI E2E Product 001\" into the product name input field"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Search products by SKU returns matching rows",
+    "description": "Verifies the product table can be narrowed by searching for a specific SKU.",
+    "category": "Product Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Products\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Products\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Search products by SKU or name using \"SKU\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"product list table\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Filter products by status: In Stock",
+    "description": "Verifies the status filter can be set to In Stock and the list updates accordingly.",
+    "category": "Product Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Products\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Filter products by status (All, In Stock, Low Stock, Out of Stock) by selecting \"In Stock\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"In Stock\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"product list table\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Filter products by status: Low Stock",
+    "description": "Verifies the status filter can be set to Low Stock and the list updates accordingly.",
+    "category": "Product Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Products\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Filter products by status (All, In Stock, Low Stock, Out of Stock) by selecting \"Low Stock\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Low Stock\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"product list table\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "Submit Add Product with required fields empty shows validation errors",
+    "description": "Verifies client-side validation messages appear when submitting the Add Product form without required fields.",
+    "category": "Product Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Products\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Product\" button"
+      },
+      {
+        "type": "action",
+        "description": "Click submit to create product"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"required\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "Register an inbound movement with note and verify it appears at top of log",
+    "description": "Verifies a user can register an Inbound stock movement and see it appear as the newest entry in the movement log.",
+    "category": "Stock Movement Registration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Movements\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Register Movement\" button to open the dialog"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Register Movement\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Select a product from the product dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Inbound\" from the movement type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"5\" into the quantity field"
+      },
+      {
+        "type": "action",
+        "description": "Select a location from the \"To location\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Inbound test movement\" into the note field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Inbound\" is visible in the movement log table"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"5\" is visible in the movement log table"
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "Register an outbound movement and verify it appears in log with outbound type",
+    "description": "Verifies a user can register an Outbound stock movement and see it listed in the movement log.",
+    "category": "Stock Movement Registration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Movements\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Register Movement\" button to open the dialog"
+      },
+      {
+        "type": "action",
+        "description": "Select a product from the product dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Outbound\" from the movement type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"2\" into the quantity field"
+      },
+      {
+        "type": "action",
+        "description": "Select a location from the \"From location\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Outbound\" is visible in the movement log table"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"2\" is visible in the movement log table"
+      }
+    ]
+  },
+  {
+    "id": "TC023",
+    "title": "Validate required fields: missing product or quantity blocks submission",
+    "description": "Verifies validation errors appear and submission is prevented when required fields are missing.",
+    "category": "Stock Movement Registration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Movements\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Register Movement\" button to open the dialog"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Inbound\" from the movement type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Product\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Quantity\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC024",
+    "title": "Transfer requires both from and to locations",
+    "description": "Verifies transfer movement validation requires both source and destination locations.",
+    "category": "Stock Movement Registration",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Movements\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Register Movement\" button to open the dialog"
+      },
+      {
+        "type": "action",
+        "description": "Select a product from the product dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Transfer\" from the movement type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"3\" into the quantity field"
+      },
+      {
+        "type": "action",
+        "description": "Select a location from the \"From location\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"To location\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC025",
+    "title": "Filter movement log by type and verify only matching type is shown",
+    "description": "Verifies the movement log can be filtered by movement type using the UI filter control.",
+    "category": "Stock Movement Registration",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Movements\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Select \"Inbound\" from the movement type filter dropdown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Inbound\" is visible in the movement log table"
+      }
+    ]
+  },
+  {
+    "id": "TC026",
+    "title": "Register an adjustment movement and verify it appears in the log",
+    "description": "Verifies a user can register an Adjustment movement and see it recorded in the movement log.",
+    "category": "Stock Movement Registration",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Movements\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Register Movement\" button to open the dialog"
+      },
+      {
+        "type": "action",
+        "description": "Select a product from the product dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Adjustment\" from the movement type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"1\" into the quantity field"
+      },
+      {
+        "type": "action",
+        "description": "Select a location from the relevant location dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Cycle count adjustment\" into the note field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Adjustment\" is visible in the movement log table"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"1\" is visible in the movement log table"
+      }
+    ]
+  },
+  {
+    "id": "TC027",
+    "title": "Cancel movement registration dialog without creating a movement",
+    "description": "Verifies the registration dialog can be closed and no movement is added when the user cancels.",
+    "category": "Stock Movement Registration",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Movements\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Register Movement\" button to open the dialog"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Register Movement\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Cancel\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Register Movement\" is not visible"
+      }
+    ]
+  },
+  {
+    "id": "TC028",
+    "title": "Quantity validation: prevent zero quantity submission",
+    "description": "Verifies the form blocks submission when quantity is zero.",
+    "category": "Stock Movement Registration",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Movements\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Register Movement\" button to open the dialog"
+      },
+      {
+        "type": "action",
+        "description": "Select a product from the product dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Select \"Inbound\" from the movement type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"0\" into the quantity field"
+      },
+      {
+        "type": "action",
+        "description": "Select a location from the \"To location\" dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Quantity\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC029",
+    "title": "Create a new location and verify it appears grouped by zone",
+    "description": "Creates a new warehouse location via the Add Location dialog and verifies it appears in the list under the correct zone grouping.",
+    "category": "Location Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Locations\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/locations\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Location\" button"
+      }
+    ]
+  },
+  {
+    "id": "TC030",
+    "title": "Submit a new location with all fields set and see it listed",
+    "description": "Completes the Add Location dialog with valid values (name, zone, type, capacity) and verifies the new location is visible in the locations list.",
+    "category": "Location Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Locations\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Location\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"E2E Location A\" into the location name input field"
+      }
+    ]
+  },
+  {
+    "id": "TC031",
+    "title": "Create location with zone, type, and capacity then verify visibility in list",
+    "description": "Creates a location including zone, location type, and capacity, then verifies the created location is visible in the list.",
+    "category": "Location Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Locations\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Location\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"E2E Location B\" into the location name input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Zone-Blue\" into the zone input field"
+      },
+      {
+        "type": "action",
+        "description": "Select \"shelf\" from the location type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"100\" into the capacity field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"E2E Location B\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC032",
+    "title": "Verify new location appears under the correct zone grouping",
+    "description": "Creates a location in a specific zone and verifies the zone grouping header and location name are both visible.",
+    "category": "Location Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Locations\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Location\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"E2E Zone Group Check\" into the location name input field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Zone-Green\" into the zone input field"
+      },
+      {
+        "type": "action",
+        "description": "Select \"bin\" from the location type dropdown"
+      },
+      {
+        "type": "action",
+        "description": "Type \"50\" into the capacity field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Zone-Green\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"E2E Zone Group Check\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC033",
+    "title": "Validation: submitting with empty name shows an error",
+    "description": "Attempts to create a location without a name and verifies a visible validation error is shown.",
+    "category": "Location Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Locations\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Location\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"Zone-Validation\" into the zone input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Name\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC034",
+    "title": "Validation: submitting with empty zone shows an error",
+    "description": "Attempts to create a location without a zone and verifies a visible validation error is shown.",
+    "category": "Location Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Locations\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Add Location\" button"
+      },
+      {
+        "type": "action",
+        "description": "Type \"E2E Missing Zone\" into the location name input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Submit\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Zone\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC035",
+    "title": "Verify capacity and utilization are visible on a location card",
+    "description": "Verifies that a location card shows capacity and utilization percentage information in the UI.",
+    "category": "Location Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Locations\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/locations\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Capacity\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"%\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC036",
+    "title": "Verify utilization color indicator is present on a location card",
+    "description": "Checks that a utilization indicator is displayed (as a visible element) alongside utilization metrics on a location card.",
+    "category": "Location Management",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click \"Locations\" in the sidebar navigation"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/locations\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"utilization indicator\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Utilization\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC037",
+    "title": "Audit Trail - Search by SKU and display product info card and timeline",
+    "description": "Verifies a valid SKU search shows the product info card and a transaction timeline.",
+    "category": "Audit Trail",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Audit\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"SKU-TEST-001\" into the SKU search input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Search\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Product info card\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Timeline\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC038",
+    "title": "Audit Trail - Submit search using Enter key",
+    "description": "Verifies pressing Enter in the SKU search triggers the search and renders results.",
+    "category": "Audit Trail",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Audit\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"SKU-TEST-001\" into the SKU search input field"
+      },
+      {
+        "type": "action",
+        "description": "Press Enter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Product info card\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Timeline\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC039",
+    "title": "Audit Trail - Open a timeline entry and view transaction details",
+    "description": "Verifies clicking a timeline entry reveals transaction details including key fields.",
+    "category": "Audit Trail",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Audit\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"SKU-TEST-001\" into the SKU search input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Search\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Timeline\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click on the first timeline entry"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Timestamp\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Action\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Quantity\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Location\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Notes\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC040",
+    "title": "Audit Trail - Non-existent SKU shows no results state",
+    "description": "Verifies searching for a non-existent SKU shows an empty state or no-results message.",
+    "category": "Audit Trail",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Audit\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"SKU-NOT-REAL-999999\" into the SKU search input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Search\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No results\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC041",
+    "title": "Audit Trail - Empty search submission shows validation or guidance",
+    "description": "Verifies submitting an empty SKU search does not run a result timeline and shows guidance/validation.",
+    "category": "Audit Trail",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Audit\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Search\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Enter SKU\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC042",
+    "title": "Audit Trail - Trim whitespace around SKU input",
+    "description": "Verifies SKU searches work when the user includes leading/trailing spaces in the input.",
+    "category": "Audit Trail",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Audit\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"  SKU-TEST-001  \" into the SKU search input field"
+      },
+      {
+        "type": "action",
+        "description": "Press Enter"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Product info card\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Timeline\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC043",
+    "title": "Audit Trail - Subsequent search replaces previous results",
+    "description": "Verifies running a second search updates the product card and timeline to the new SKU instead of appending old results.",
+    "category": "Audit Trail",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Audit\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"SKU-TEST-001\" into the SKU search input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Search\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Product info card\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Type \"SKU-TEST-002\" into the SKU search input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Search\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"SKU-TEST-002\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC044",
+    "title": "Audit Trail - Timeline empty for valid SKU with zero movements",
+    "description": "Verifies the UI handles a SKU that exists but has no movements by showing product info and an empty timeline state.",
+    "category": "Audit Trail",
+    "priority": "Low",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click on \"Audit\" in the sidebar navigation"
+      },
+      {
+        "type": "action",
+        "description": "Type \"SKU-NO-MOVES-000\" into the SKU search input field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Search\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Product info card\" is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"No transactions\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC045",
+    "title": "Navigate between core pages using sidebar links (Products → Movements → Audit Trail)",
+    "description": "Verifies authenticated users can use the sidebar to move between primary routes and see the correct page load each time.",
+    "category": "Navigation & Session Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sidebar link \"Products\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/products\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sidebar link \"Movements\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/movements\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sidebar link \"Audit Trail\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/audit\""
+      }
+    ]
+  },
+  {
+    "id": "TC046",
+    "title": "Sidebar navigation from Dashboard to Locations",
+    "description": "Verifies an authenticated user can navigate to Locations from the app shell sidebar.",
+    "category": "Navigation & Session Management",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sidebar link \"Locations\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/locations\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify text \"Locations\" is visible"
+      }
+    ]
+  },
+  {
+    "id": "TC047",
+    "title": "Mobile: Open hamburger menu and navigate using the mobile sidebar sheet",
+    "description": "Verifies the mobile navigation drawer opens and selecting a destination navigates to the chosen route.",
+    "category": "Navigation & Session Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click the hamburger menu button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify element \"Mobile sidebar\" is visible"
+      },
+      {
+        "type": "action",
+        "description": "Click the navigation item \"Products\" in the mobile sidebar"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/products\""
+      }
+    ]
+  },
+  {
+    "id": "TC048",
+    "title": "Sign out from a non-dashboard page (Products)",
+    "description": "Verifies sign out works consistently regardless of the current route.",
+    "category": "Navigation & Session Management",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_USER}}\" into the email field"
+      },
+      {
+        "type": "action",
+        "description": "Type \"{{LOGIN_PASSWORD}}\" into the password field"
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign in\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/\""
+      },
+      {
+        "type": "action",
+        "description": "Click the sidebar link \"Products\""
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/products\""
+      },
+      {
+        "type": "action",
+        "description": "Click the \"Sign out\" button"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify URL contains \"/login\""
+      }
+    ]
+  }
+]

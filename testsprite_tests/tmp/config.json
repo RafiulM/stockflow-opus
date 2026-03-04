@@ -1,0 +1,20 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "loginUser": "raf@raf.com",
+  "loginPassword": "admin123",
+  "executionArgs": {
+    "projectName": "ag-opus-inv",
+    "projectPath": "/Users/rafiulm/ag-opus-inv",
+    "testIds": [],
+    "additionalInstruction": "",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user-9d86zqWFfr4RcT-8t-jxzW61gs2oaG-SShpB7Rt60tWGZti9gqhxM50i9EJV-pZPVNx6ysezz4w13a_NAiW3ZCYINZreXnQnhTd8fDZ6Q5ZXKnMXGqKcEDLM-ddzwWRECq0"
+    }
+  },
+  "serverPort": 52075,
+  "proxy": "http://a51b95fe-8964-4298-942a-03a6243bbad7:VBvpSoZ5d7RWsE2RWUEHXc24YWLgIMvs@tun.testsprite.com:8080"
+}
