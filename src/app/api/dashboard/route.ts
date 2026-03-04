@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { products, movements, locations } from "@/db/schema";
-import { eq, sql, gte } from "drizzle-orm";
+import { eq, sql, gte, desc } from "drizzle-orm";
 
 // GET /api/dashboard — KPI aggregation
 export async function GET() {
@@ -62,6 +62,49 @@ export async function GET() {
       .orderBy(sql`${movements.createdAt} DESC`)
       .limit(10);
 
+    // Movement trends — last 30 days, grouped by date + type
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    const thirtyDaysAgoStr = thirtyDaysAgo.toISOString().split("T")[0];
+
+    const trendRows = await db
+      .select({
+        date: sql<string>`DATE(${movements.createdAt})`.as("date"),
+        type: movements.type,
+        total: sql<number>`COALESCE(SUM(ABS(${movements.qty})), 0)`.as("total"),
+      })
+      .from(movements)
+      .where(gte(movements.createdAt, thirtyDaysAgoStr))
+      .groupBy(sql`DATE(${movements.createdAt})`, movements.type)
+      .orderBy(sql`DATE(${movements.createdAt})`);
+
+    // Pivot into { date, inbound, outbound, transfer, adjustment }[]
+    const trendMap = new Map<string, { date: string; inbound: number; outbound: number; transfer: number; adjustment: number }>();
+    for (const row of trendRows) {
+      if (!trendMap.has(row.date)) {
+        trendMap.set(row.date, { date: row.date, inbound: 0, outbound: 0, transfer: 0, adjustment: 0 });
+      }
+      const entry = trendMap.get(row.date)!;
+      entry[row.type as "inbound" | "outbound" | "transfer" | "adjustment"] = row.total;
+    }
+    const movementTrends = Array.from(trendMap.values());
+
+    // Stock by category
+    const stockByCategoryRows = await db
+      .select({
+        category: products.category,
+        totalStock: sql<number>`COALESCE(SUM(${movements.qty}), 0)`.as("totalStock"),
+      })
+      .from(products)
+      .leftJoin(movements, eq(movements.productId, products.id))
+      .groupBy(products.category)
+      .orderBy(desc(sql`totalStock`));
+
+    const stockByCategory = stockByCategoryRows.map((r) => ({
+      category: r.category,
+      totalStock: r.totalStock,
+    }));
+
     return NextResponse.json({
       kpi: {
         totalStock,
@@ -70,6 +113,8 @@ export async function GET() {
         activeLocations,
       },
       recentActivity,
+      movementTrends,
+      stockByCategory,
     });
   } catch (error) {
     console.error("GET /api/dashboard error:", error);

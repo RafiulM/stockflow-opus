@@ -11,6 +11,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { KpiCard } from "@/components/kpi-card";
 import { MovementBadge } from "@/components/movement-badge";
+import { MovementTrendsChart } from "@/components/movement-trends-chart";
+import { StockByCategoryChart } from "@/components/stock-by-category-chart";
 
 interface KpiData {
   totalStock: number;
@@ -32,9 +34,24 @@ interface Activity {
   note: string;
 }
 
+interface TrendPoint {
+  date: string;
+  inbound: number;
+  outbound: number;
+  transfer: number;
+  adjustment: number;
+}
+
+interface CategoryStock {
+  category: string;
+  totalStock: number;
+}
+
 export default function DashboardPage() {
   const [kpi, setKpi] = useState<KpiData | null>(null);
   const [recentActivity, setRecentActivity] = useState<Activity[]>([]);
+  const [movementTrends, setMovementTrends] = useState<TrendPoint[]>([]);
+  const [stockByCategory, setStockByCategory] = useState<CategoryStock[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchData = useCallback(async () => {
@@ -44,6 +61,8 @@ export default function DashboardPage() {
       const data = await res.json();
       setKpi(data.kpi);
       setRecentActivity(data.recentActivity);
+      setMovementTrends(data.movementTrends);
+      setStockByCategory(data.stockByCategory);
     } catch (err) {
       console.error("Dashboard fetch error:", err);
     } finally {
@@ -122,6 +141,12 @@ export default function DashboardPage() {
           icon={TrendingDown}
           accent="blue"
         />
+      </div>
+
+      {/* Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <MovementTrendsChart data={movementTrends} />
+        <StockByCategoryChart data={stockByCategory} />
       </div>
 
       {/* Recent Activity + Quick Actions */}
